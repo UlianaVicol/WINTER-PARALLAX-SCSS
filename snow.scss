@@ -1,0 +1,54 @@
+$colorDark: rgba(44, 46, 47, 0.1); 
+$colorLight:  rgba(42, 55, 66, 0.7);
+$flakeLayerColor: #234;
+$flakeColor: rgb(111, 115, 122);
+$flakeSize: 5px;
+$fallDuration:20s;
+body{
+    
+    overflow:hidden;
+}
+.flake-layer{
+    //background-color: $flakeLayerColor;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background: 
+    linear-gradient($colorDark, $colorLight),
+        url(img.jpg);
+        
+        background-position: bottom center;
+        background-size: cover;
+
+    .flake{
+        
+        border-radius: $flakeSize;
+        position:absolute;
+        //left:1% * random(100);
+        top: -$flakeSize * 2;
+        animation: fall $fallDuration linear infinite;
+
+        @keyframes fall{
+            from{
+                top: -$flakeSize * 2;
+            }
+            to{
+                top:100%;
+            }
+        }
+        @for $n from 1 through 100 {
+        &:nth-child(#{$n}){
+            left: 1% * random(100);
+            animation-delay: $fallDuration * random();
+            $sizeK: 0.5 + random(); // 1.1 ... 1.1
+            animation-duration: $fallDuration * 1 / $sizeK;
+            
+            width: $flakeSize * $sizeK;
+            height:$flakeSize * $sizeK;
+            background-color: lighten($flakeColor, $sizeK * 45%);
+        }
+        }
+    }
+}
